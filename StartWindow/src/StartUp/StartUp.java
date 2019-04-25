@@ -1,52 +1,65 @@
-import javafx.application.Application;
+package StartUp;
+
+import gui.ConfirmBox;
+import javafx.application.Application; 
+import static javafx.application.Application.launch;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene; 
+import javafx.scene.control.Button; 
+import javafx.scene.image.*;
+import javafx.scene.layout.*; 
+import javafx.stage.Stage;
+import java.io.FileInputStream;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.StackPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
-import gui.ConfirmBox;
-import static javafx.application.Application.launch;
-import javafx.fxml.FXMLLoader;
  
 public class StartUp extends Application {
  
     private String loggedInUser;
     Stage window;
- 
-    public static void main(String[] args) {
-        launch(args);
-    }
- 
-    // JavaFX entry point
-    // How to open a new window in JavaFX
+    Button btnLogin = new Button();
+    Button btnStartSpel = new Button("StartSpel");
+    Button btnSluiten = new Button("Sluiten");
+    
     @Override
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
-        Button btnLogin = new Button();
-        btnLogin.setLayoutX(50);
-        btnLogin.setLayoutY(50);
+        
+        // A layout container for UI controls
+        Pane root = new Pane();
+        
+        //stream lezen mogelijk om in te lezen en wegteschrijven
+        Image img = new Image (new FileInputStream("C:\\test.png"));
+        ImageView imgView = new ImageView(img);
+        root.getChildren().add(imgView);
+        
+        root.getChildren().add(btnLogin);
+        btnLogin.setLayoutX(200); // hoe meer naar rechts
+        btnLogin.setLayoutY(255); // hoe hoger naar beneden
+        btnLogin.setPrefHeight(20);
+        btnLogin.setPrefWidth(100);
         btnLogin.setText("Login");
         
+        root.getChildren().add(btnSluiten);
+        btnSluiten.setLayoutX(200); // hoe meer naar rechts
+        btnSluiten.setLayoutY(278); // hoe hoger naar beneden
+        btnSluiten.setPrefHeight(20);
+        btnSluiten.setPrefWidth(100);
         
-     
-        Button btnStartSpel = new Button("StartSpel");
-        btnStartSpel.setLayoutX(50);
-        btnStartSpel.setLayoutY(50);
+        root.getChildren().add(btnStartSpel);
+        btnStartSpel.setLayoutX(200); // hoe meer naar rechts
+        btnStartSpel.setLayoutY(300); // hoe hoger naar beneden
+        btnStartSpel.setPrefHeight(20);
+        btnStartSpel.setPrefWidth(100);
         
-        // create a button 
-        Button btnSluiten = new Button("Sluiten");
-        btnSluiten.setLayoutX(50);
-        btnSluiten.setLayoutY(50);
-        // set default button 
-        btnSluiten.setDefaultButton(true); 
+        
+         btnSluiten.setDefaultButton(true); 
+        
          window.setOnCloseRequest(e-> {
           e.consume();
           closeProgram();
@@ -59,20 +72,8 @@ public class StartUp extends Application {
                 showLoginScreen();
             }
         });
-        
-        // A layout container for UI controls
-        StackPane root = new StackPane();
-        root.getChildren().add(btnLogin); 
-        root.getChildren().add(btnSluiten);
-        root.getChildren().add(btnStartSpel);
-       
-        
-        
- 
         // Top level container for all view content
-        Scene scene = new Scene(root, 300, 250);
-        
- 
+        Scene scene = new Scene(root, 736, 344);
         // primaryStage is the main top level window created by platform
         primaryStage.setTitle("Login scherm");
         primaryStage.setScene(scene);
@@ -130,8 +131,12 @@ public class StartUp extends Application {
         box.getChildren().add(textUser);
         box.getChildren().add(textPass);
         box.getChildren().add(btnLogin);
+        
         Scene scene = new Scene(box, 250, 150);
         stage.setScene(scene);
         stage.show();
+    }
+    public static void main(String[] args) {
+        launch(args);
     }
 }
