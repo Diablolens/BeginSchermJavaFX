@@ -11,22 +11,18 @@ import javafx.scene.image.*;
 import javafx.scene.layout.*; 
 import javafx.stage.Stage;
 import java.io.FileInputStream;
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import gui.Login;
+import gui.BeginScherm;
  
 public class StartUp extends Application {
  
-    private String loggedInUser;
+    
     Stage window;
     Button btnLogin = new Button();
     Button btnStartSpel = new Button("StartSpel");
     Button btnSluiten = new Button("Sluiten");
     
-    @Override
+   
     public void start(Stage primaryStage) throws Exception {
         window = primaryStage;
         
@@ -57,6 +53,14 @@ public class StartUp extends Application {
         btnStartSpel.setPrefHeight(20);
         btnStartSpel.setPrefWidth(100);
         
+        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
+ 
+            @Override
+            public void handle(ActionEvent event) {
+                Login.showLoginScreen();
+               
+            }
+        });
         
          btnSluiten.setDefaultButton(true); 
         
@@ -66,18 +70,12 @@ public class StartUp extends Application {
               });
         btnSluiten.setOnAction(e-> closeProgram()); 
         
-        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                showLoginScreen();
-            }
-        });
-        // Top level container for all view content
-        Scene scene = new Scene(root, 736, 344);
-        // primaryStage is the main top level window created by platform
-        primaryStage.setTitle("Login scherm");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+       Scene scene = new Scene(root, 736, 344);
+            // primaryStage is the main top level window created by platform
+            primaryStage.setTitle("Login scherm");
+            primaryStage.setScene(scene);
+            primaryStage.show();
+      
     }
     private void closeProgram(){
         Boolean aswer = ConfirmBox.display("Title","Zeker dat u wilt aflsuiten?");
@@ -87,55 +85,9 @@ public class StartUp extends Application {
         }
     }
  
-    public void setLoggedInUser(String user) {
-        loggedInUser = user;
+   
  
-        Alert alert = new Alert(AlertType.INFORMATION);
-        alert.setTitle("Met succes ingeloged");
-        alert.setHeaderText("Met succes ingeloged");
-        String s = user + " logged in!";
-        alert.setContentText(s);
-        alert.show();
-    }
- 
-    public void showLoginScreen() {
-        Stage stage = new Stage();
- 
-        VBox box = new VBox();
-        box.setPadding(new Insets(10));
- 
-        // How to center align content in a layout manager in JavaFX
-        box.setAlignment(Pos.CENTER);
- 
-        Label label = new Label("geef naam en wachtwoord");
- 
-        TextField textUser = new TextField();
-        textUser.setPromptText("Vul naam in");
-        TextField textPass = new TextField();
-        textPass.setPromptText("Geef het wachtwoord");
- 
-        Button btnLogin = new Button();
-        btnLogin.setText("inloggen");
- 
-        btnLogin.setOnAction(new EventHandler<ActionEvent>() {
- 
-            @Override
-            public void handle(ActionEvent event) {
-                // Assume success always!
-                setLoggedInUser(textUser.getText());
-                stage.close(); // return to main window
-            }
-        });
- 
-        box.getChildren().add(label);
-        box.getChildren().add(textUser);
-        box.getChildren().add(textPass);
-        box.getChildren().add(btnLogin);
-        
-        Scene scene = new Scene(box, 250, 150);
-        stage.setScene(scene);
-        stage.show();
-    }
+    
     public static void main(String[] args) {
         launch(args);
     }
